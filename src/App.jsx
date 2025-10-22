@@ -19,14 +19,16 @@ user && console.log(user);
 
 
   return (
-    <div>
-      <h1> Realchat</h1>
+    <div style={{maxWidth:"600px", margin:"0 auto", display:"flex", flexDirection:"column", gap:"5px"}}>
+      <h1 style={{textAlign:"center", margin:"10px"}}> Realchat</h1>
       {user ?
         <>
         <div className="user-info">
           <img src={user.photoURL} alt={user.displayName} />
+          <div className='usernameImg'>
           <span>{user.displayName}</span>
           <button onClick={()=>signOut(auth)}>Kijelentkezés</button>
+          </div>
         </div>
         <Chatroom user={user}/>
         </>  :

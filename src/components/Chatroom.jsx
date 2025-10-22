@@ -17,9 +17,11 @@ export const Chatroom = ({user}) => {
     
 
     const handleSubmit=async (e)=>{
+
         e.preventDefault()
         const text=inputRef.current.value 
-        console.log(text);
+        console.log(text.replace(/ /g,''));
+        if(text.replace(/ /g,'').length == 0) return
         const message={
             text,
             uid:user.uid,
@@ -29,23 +31,22 @@ export const Chatroom = ({user}) => {
         }
         //meghíjuk a firestore fg-t
         await addMessage(message)
-
+        inputRef.current.value = ""
     }
 
     
 
   return (
-    <div>
-      default Chatroom
+    <div className='mainHolder'>
 
-      <form  onSubmit={handleSubmit} className='chatForm'>
-        <input ref={inputRef} type="text" placeholder='írj valamit...' />
-        <button type='submit'>Küldés</button>
-      </form>
       <div className='messagesHolder' style={{display:"flex", flexDirection:"column", gap:"10px"}}>
 
       {messages && messages.map(msg =><Message key={msg.id} msg={msg}  currentUser={user.uid}/>)}
       </div>
+      <form  onSubmit={handleSubmit} className='chatForm'>
+        <input ref={inputRef} className='inputField' type="text" placeholder='írj valamit...' />
+        <button className='inputButton' type='submit'>Küldés</button>
+      </form>
 
     </div>
   )
